@@ -13,7 +13,7 @@ export function fetchEmployee(action$) {
     .switchMap(id => {
       return Observable.fromPromise(
         axios.get(`http://localhost:8081/employees/${id}`)
-      ).map(res => postsActions.fetchEmployeeSuccess(res.data));
+      ).map(res => postsActions.fetchEmployeeSuccess(res.data.employees[0]));
     });
 }
 
@@ -23,7 +23,7 @@ export function fetchEmployees(action$) {
     .switchMap(params => {
       return Observable.fromPromise(
         axios.get(`http://localhost:8081/employees?${querystring.stringify(params)}`)
-      ).map(res => postsActions.fetchEmployeesSuccess(res.data, params));
+      ).map(res => postsActions.fetchEmployeesSuccess(res.data.employees, params));
     });
 }
 
@@ -34,7 +34,7 @@ export function updateEmployee(action$) {
       return Observable.merge(
         Observable.fromPromise(
           axios.put(`http://localhost:8081/employees/${employee.id}`, employee)
-        ).map(res => postsActions.updateEmployeeSuccess(res.data)),
+        ).map(res => postsActions.updateEmployeeSuccess(res.data.employees)),
         Observable.of(push('/employees'))
       );
     });
@@ -47,7 +47,7 @@ export function createEmployee(action$) {
       return Observable.merge(
         Observable.fromPromise(
           axios.post(`http://localhost:8081/employees`, employee)
-        ).map(res => postsActions.createEmployeeSuccess(res.data)),
+        ).map(res => postsActions.createEmployeeSuccess(res.data.employees)),
         Observable.of(push('/employees'))
       );
     });

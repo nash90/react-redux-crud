@@ -3,12 +3,8 @@ var db = require('./db');
 var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
-var jwt = require('jsonwebtoken');
-var expressJwt = require('express-jwt');
 var validate = require('express-validation');
 var validations = require('./validations');
-
-var jwtSecret = 'JWT_SECRET';
 
 var user = {
   email: 'user@example.com',
@@ -19,35 +15,119 @@ var app = jsonServer.create();
 
 app.use(cors());
 app.use(bodyParser.json());
-// app.use(expressJwt({secret: jwtSecret}).unless({path: ['/login']}));
 
-app.post('/login', authenticate, function (req, res) {
-  var token = jwt.sign({email: user.email}, jwtSecret);
-  res.send({token: token, user: user});
+var sqlite3         =       require('sqlite3').verbose();
+var dbb              =       new sqlite3.Database('./test.db');
+var employees = [];
+
+function selectAllData(res){
+    dbb.all("SELECT * from employees", function(err,rows){
+        if(!err){
+//            console.log("data : ",rows);
+            employees = rows;
+            console.log("data in selectAllData :", employees);
+            res.json({employees});
+        } else {
+            console.log("error occured in selectAllData");
+            res.status(500);
+        }
+    });
+}
+
+function selectData(id, res){
+    dbb.all("SELECT * from employees where id="+id, function(err,rows){
+        if(!err){
+            console.log("data of select data: ",rows);
+            employees = rows;
+//            console.log("data in employe selectData :", employees);
+            res.json({employees});
+        } else {
+            console.log("error occured in selectData");
+            res.status(500);
+        }
+    });
+}
+
+function insertData(data, res){
+    dbb.run("INSERT into employees(name, address, phone, email, job, salary) values('"
+        +data.name+"' ,'"
+        +data.address+"' ,'"
+        +data.phone+"' ,'"
+        +data.email+"' ,'"
+        +data.job+"' ,'"
+        +data.salary+"');",
+        function (err){
+            if(!err){
+                console.log("insert success");
+                res.status(200);
+            }else{
+                console.log("error occured in insertData :", err);
+                res.status(500);
+        }
+    });
+}
+
+function updateData(data, res){
+console.log("data value is :", data)
+    dbb.run(
+        "UPDATE employees SET name='"+data.name
+        + "', address='" +data.address
+        + "', phone='" +data.phone
+        + "', email='" +data.email
+        + "', job='" +data.job
+        + "', salary='" +data.salary
+        +"' where id ='"
+        +data.id+ "'",
+        function (err){
+            if(!err){
+                console.log("update success");
+                res.status(200);
+            }else{
+                console.log("error occured in updateData :", err);
+                res.status(500);
+            }
+        }
+    );
+}
+
+function deleteData(id, res){
+    dbb.run(
+        "DELETE from employees where id="+id, function(err){
+            if(!err){
+                console.log("delete success");
+                res.status(200);
+            }else{
+                console.log("error occured in deleteData :", err);
+                res.status(500);
+            }
+        }
+    );
+}
+
+app.get('/employees', function (req, res, next){
+    selectAllData(res);
+//    res.json({employees});
 });
 
-app.post('/categories', validate(validations.category), function(req, res, next){
-  next();
+app.get('/employees/:id', function (req, res, next){
+    selectData(req.params.id, res);
+//    res.json({employees});
 });
 
-app.put('/categories/:id', validate(validations.category), function(req, res, next){
-  next();
+app.post('/employees', function (req, res, next){
+    console.log("post req body: ", req.body );
+    insertData(req.body, res);
 });
 
-app.post('/posts', validate(validations.post), function(req, res, next){
-  next();
+app.put('/employees/:id', function (req, res, next){
+    console.log("put req body: ", req.body );
+    updateData(req.body, res);
 });
 
-app.put('/posts/:id', validate(validations.post), function(req, res, next){
-  next();
+app.delete('/employees/:id', function (req, res, next){
+    deleteData(req.params.id, res);
 });
 
-app.get('/me', function (req, res) {
-  res.send(req.user);
-});
-
-app.use(jsonServer.router(db));
-app.use(jsonServer.defaults());
 
 app.listen(8081);
 
