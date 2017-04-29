@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { Link } from 'react-router';
-import { PostsList } from '../components/posts/PostsList';
+import { EmployeesList } from '../components/employees/PostsList';
 import { SearchInput } from '../components/shared/SearchInput';
 import { postsActions, postsSelectors } from '../store/posts/index';
 
