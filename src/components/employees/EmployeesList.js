@@ -1,7 +1,7 @@
 import React from 'react';
-import { PostsListRow } from './PostsListRow';
+import { EmployeesListRow } from './EmployeesListRow';
 
-export const PostsList = ({posts, onDelete}) => {
+export const EmployeesList = ({employees, onDelete}) => {
   return (
     <table className="table table-hover">
       <thead>
@@ -13,7 +13,7 @@ export const PostsList = ({posts, onDelete}) => {
       </tr>
       </thead>
       <tbody>
-      {posts.map(post => PostsListRow({post, onDelete}))}
+      {employees.map(employee => EmployeesListRow({employee, onDelete}))}
       </tbody>
     </table>
   )

@@ -11,7 +11,7 @@ import { isEqual } from 'lodash';
     };
   }
 )
-export class PostsEdit extends React.Component {
+export class EmployeesEdit extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object,
     store: React.PropTypes.object

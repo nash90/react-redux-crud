@@ -2,7 +2,7 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux'
 import { Link } from 'react-router';
-import { EmployeesList } from '../components/employees/PostsList';
+import { EmployeesList } from '../components/employees/EmployeesList';
 import { SearchInput } from '../components/shared/SearchInput';
 import { postsActions, postsSelectors } from '../store/posts/index';
 
@@ -10,11 +10,11 @@ import { postsActions, postsSelectors } from '../store/posts/index';
   (state) => {
     return {
       params: postsSelectors.getParams(state),
-      posts: postsSelectors.getPosts(state),
+      employees: postsSelectors.getPosts(state),
     };
   }
 )
-export class PostsIndex extends React.Component {
+export class EmployeesIndex extends React.Component {
   static contextTypes = {
     router: React.PropTypes.object,
     store: React.PropTypes.object,
@@ -46,7 +46,7 @@ export class PostsIndex extends React.Component {
   render() {
     const {
       params,
-      posts,
+      employees,
     } = this.props;
 
     return (
@@ -60,11 +60,11 @@ export class PostsIndex extends React.Component {
             />
           </div>
           <div className="col-md-6 text-right">
-            <Link to="/posts/new" className="btn btn-primary">New Post</Link>
+            <Link to="/employees/new" className="btn btn-primary">New Post</Link>
           </div>
         </div>
-        {posts.length > 0 &&
-        <PostsList posts={posts} onDelete={this.deletePost}/>}
+        {employees.length > 0 &&
+        <EmployeesList employees={employees} onDelete={this.deletePost}/>}
       </div>
     );
   }

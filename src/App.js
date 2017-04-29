@@ -9,8 +9,8 @@ import { Auth } from './services/Auth';
 import {
   Login,
   Dashboard,
-  PostsIndex,
-  PostsEdit,
+  EmployeesIndex,
+  EmployeesEdit,
 } from './containers/index';
 
 require('./app.scss');
@@ -25,8 +25,8 @@ let App = ({children}) => {
           <IndexLinkContainer to="/">
             <NavItem>Dashboard</NavItem>
           </IndexLinkContainer>
-          <LinkContainer to="/posts">
-            <NavItem>Posts</NavItem>
+          <LinkContainer to="/employees">
+            <NavItem>Employees</NavItem>
           </LinkContainer>
         </Nav>
         {Auth.authenticated() && <Nav className="pull-right">
@@ -52,9 +52,9 @@ export default () => {
         <Route path="/login" component={Login} />
         <Route path="/" component={App}>
           <IndexRoute component={Dashboard} />
-          <Route path="/posts" component={PostsIndex} />
-          <Route path="/posts/new" component={PostsEdit} />
-          <Route path="/posts/:postId" component={PostsEdit} />
+          <Route path="/employees" component={EmployeesIndex} />
+          <Route path="/employees/new" component={EmployeesEdit} />
+          <Route path="/employees/:employeeId" component={EmployeesEdit} />
         </Route>
       </Router>
     </Provider>

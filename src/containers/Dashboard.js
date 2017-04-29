@@ -4,9 +4,9 @@ export class Dashboard extends React.Component {
   render() {
     return (
       <div className="jumbotron">
-        <h1>react-redux-crud</h1>
+        <h1>HOME</h1>
         <p>
-          React + Redux CRUD demo
+          Home React Redux CRUD
         </p>
       </div>
     );

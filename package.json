@@ -13,7 +13,7 @@
     "redux",
     "crud"
   ],
-  "author": "Tomasz Bak <t.bak@selleo.com>",
+  "author": "Test User",
   "license": "MIT",
   "dependencies": {
     "autoprefixer": "^6.5.1",
