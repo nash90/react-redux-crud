@@ -7,9 +7,12 @@ export const EmployeesList = ({employees, onDelete}) => {
       <thead>
       <tr>
         <th>Id</th>
-        <th>Title</th>
-        <th>Category</th>
-        <th></th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Job</th>
+        <th>Salary</th>
       </tr>
       </thead>
       <tbody>

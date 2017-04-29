@@ -3,13 +3,13 @@ var _ = require('lodash');
 
 module.exports = function() {
   var data = {
-    categories: [],
-    posts: [],
+    name: [],
+    employees: [],
   };
 
   // Create categories
-  for (var i = 1; i <= 3; i++) {
-    data.categories.push({
+  for (var i = 1; i <= 5; i++) {
+    data.name.push({
       id: i,
       name: _.capitalize(faker.lorem.word())
     });
@@ -17,11 +17,15 @@ module.exports = function() {
 
   // Create posts
   for (var i = 1; i <= 5; i++) {
-    data.posts.push({
+    data.employees.push({
       id: i,
-      category_id: _.shuffle(data.categories)[0].id,
-      title: faker.lorem.sentence().slice(0,-1),
-      body: faker.lorem.lines()
+      name: _.shuffle(data.name)[0].name,
+      address: faker.lorem.sentence().slice(0,-1),
+      phone: i,
+      email:"a@b",
+      job: "engineer",
+      salary: "$1000"
+//      body: faker.lorem.lines()
     });
   }
 

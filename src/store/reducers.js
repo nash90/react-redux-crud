@@ -6,7 +6,7 @@ import categories from './categories/reducer';
 import posts from './posts/reducer';
 
 export default combineReducers({
-  auth,
+  //auth,
   categories,
   posts,
   routing: routerReducer,

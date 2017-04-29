@@ -6,7 +6,7 @@ export class Dashboard extends React.Component {
       <div className="jumbotron">
         <h1>HOME</h1>
         <p>
-          Home React Redux CRUD
+          CRUD using react redux
         </p>
       </div>
     );

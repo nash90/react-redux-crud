@@ -7,7 +7,7 @@ import { isEqual } from 'lodash';
 @connect(
   (state, props) => {
     return {
-      post: postsSelectors.getPost(state, props.params.postId),
+      employee: postsSelectors.getPost(state, props.params.employeeId),
     };
   }
 )
@@ -19,7 +19,7 @@ export class EmployeesEdit extends React.Component {
 
   static propTypes = {
     params: React.PropTypes.object,
-    post: React.PropTypes.object,
+    employee: React.PropTypes.object,
   };
 
   constructor(props, context) {
@@ -27,33 +27,33 @@ export class EmployeesEdit extends React.Component {
 
     this.state = {
       ...this.state,
-      postId: this.props.params.postId,
-      post: {title: '', body: ''}
+      employeeId: this.props.params.employeeId,
+      employee: {id: '', name: '', address: '', phone: '', email: '', job: '', salary: ''}
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!isEqual(nextProps.post, this.state.post)) {
-      this.setState({...this.state, post: nextProps.post});
+    if (!isEqual(nextProps.employee, this.state.employee)) {
+      this.setState({...this.state, employee: nextProps.employee});
     }
   }
 
   componentDidMount() {
-    if (this.state.postId) {
-      this.context.store.dispatch(postsActions.fetchPost(this.props.params.postId));
+    if (this.state.employeeId) {
+      this.context.store.dispatch(postsActions.fetchEmployee(this.props.params.employeeId));
     }
   }
 
   handleChange(field, e) {
-    const post = Object.assign({}, this.state.post, {[field]: e.target.value});
-    this.setState(Object.assign({}, this.state, {post}));
+    const employee = Object.assign({}, this.state.employee, {[field]: e.target.value});
+    this.setState(Object.assign({}, this.state, {employee}));
   }
 
   handleSubmit() {
-    if (this.state.postId) {
-      this.context.store.dispatch(postsActions.updatePost(this.state.post));
+    if (this.state.employeeId) {
+      this.context.store.dispatch(postsActions.updateEmployee(this.state.employee));
     } else {
-      this.context.store.dispatch(postsActions.createPost(this.state.post));
+      this.context.store.dispatch(postsActions.createEmployee(this.state.employee));
     }
   }
 
@@ -61,24 +61,56 @@ export class EmployeesEdit extends React.Component {
     return (
       <form onSubmit={this.handleSubmit.bind(this)} noValidate>
         <div className="form-group">
-          <label className="label-control">Title</label>
+          <label className="label-control">Name</label>
           <input
             type="text"
             className="form-control"
-            value={this.state.post.title}
-            onChange={this.handleChange.bind(this, 'title')} />
+            value={this.state.employee.name}
+            onChange={this.handleChange.bind(this, 'name')} />
         </div>
 
         <div className="form-group">
-          <label className="label-control">Body</label>
+          <label className="label-control">Address</label>
           <Textarea
             className="form-control"
-            value={this.state.post.body}
-            onChange={this.handleChange.bind(this, 'body')} />
+            value={this.state.employee.address}
+            onChange={this.handleChange.bind(this, 'address')} />
+        </div>
+
+        <div className="form-group">
+          <label className="label-control">Phone</label>
+          <Textarea
+            className="form-control"
+            value={this.state.employee.phone}
+            onChange={this.handleChange.bind(this, 'phone')} />
+        </div>
+
+        <div className="form-group">
+          <label className="label-control">Email</label>
+          <Textarea
+            className="form-control"
+            value={this.state.employee.email}
+            onChange={this.handleChange.bind(this, 'email')} />
+        </div>
+
+        <div className="form-group">
+          <label className="label-control">Job</label>
+          <Textarea
+            className="form-control"
+            value={this.state.employee.job}
+            onChange={this.handleChange.bind(this, 'job')} />
+        </div>
+
+        <div className="form-group">
+          <label className="label-control">Salary</label>
+          <Textarea
+            className="form-control"
+            value={this.state.employee.salary}
+            onChange={this.handleChange.bind(this, 'salary')} />
         </div>
 
         <button type="submit" className="btn btn-default">
-          {this.state.postId ? 'Update' : 'Create' } Post
+          {this.state.employeeId ? 'Update' : 'Create' } Post
         </button>
       </form>
     );

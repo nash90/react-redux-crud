@@ -23,24 +23,24 @@ export class EmployeesIndex extends React.Component {
   constructor(props, context) {
     super(props, context);
 
-    this.deletePost = this.deletePost.bind(this);
+    this.deleteEmployee = this.deleteEmployee.bind(this);
     this.handleSearch = this.handleSearch.bind(this, 'title_like');
   }
 
   componentDidMount() {
-    this.fetchPosts({});
+    this.fetchEmployees({});
   }
 
-  fetchPosts(params) {
-    this.context.store.dispatch(postsActions.fetchPosts(params));
+  fetchEmployees(params) {
+    this.context.store.dispatch(postsActions.fetchEmployees(params));
   }
 
-  deletePost(post) {
-    this.context.store.dispatch(postsActions.deletePost(post));
+  deleteEmployee(employee) {
+    this.context.store.dispatch(postsActions.deleteEmployee(employee));
   }
 
   handleSearch(field, value) {
-    this.fetchPosts({q: value})
+    this.fetchEmployees({q: value})
   }
 
   render() {
@@ -64,7 +64,7 @@ export class EmployeesIndex extends React.Component {
           </div>
         </div>
         {employees.length > 0 &&
-        <EmployeesList employees={employees} onDelete={this.deletePost}/>}
+        <EmployeesList employees={employees} onDelete={this.deleteEmployee}/>}
       </div>
     );
   }
