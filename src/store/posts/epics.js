@@ -34,7 +34,7 @@ export function updateEmployee(action$) {
       return Observable.merge(
         Observable.fromPromise(
           axios.put(`http://localhost:8081/employees/${employee.id}`, employee)
-        ).map(res => postsActions.updateEmployeeSuccess(res.data.employees)),
+        ).map(res => postsActions.updateEmployeeSuccess(employee)),
         Observable.of(push('/employees'))
       );
     });
@@ -47,7 +47,7 @@ export function createEmployee(action$) {
       return Observable.merge(
         Observable.fromPromise(
           axios.post(`http://localhost:8081/employees`, employee)
-        ).map(res => postsActions.createEmployeeSuccess(res.data.employees)),
+        ).map(res => postsActions.createEmployeeSuccess(employee)),
         Observable.of(push('/employees'))
       );
     });
