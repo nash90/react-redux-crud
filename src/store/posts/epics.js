@@ -51,6 +51,7 @@ export function createEmployee(action$) {
         Observable.of(push('/employees'))
       );
     });
+//    .mapTo(push('/employees'));
 }
 
 export function deletePost(action$) {

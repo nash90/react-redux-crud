@@ -1,17 +1,12 @@
-var jsonServer = require('json-server');
+//var jsonServer = require('json-server');  //used for mock during development
 var db = require('./db');
 var express = require('express');
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var validate = require('express-validation');
-var validations = require('./validations');
+var validations = require('./validations'); // to do
 
-var user = {
-  email: 'user@example.com',
-  password: 'secret'
-};
-
-var app = jsonServer.create();
+var app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -19,6 +14,12 @@ app.use(bodyParser.json());
 var sqlite3         =       require('sqlite3').verbose();
 var dbb              =       new sqlite3.Database('./test.db');
 var employees = [];
+
+function filterIt(arr, searchKey) {
+  return arr.filter(obj => Object.keys(obj).some(key =>
+    obj[key].toString().toLowerCase().includes(searchKey)
+    ));
+}
 
 function selectAllData(res){
     dbb.all("SELECT * from employees", function(err,rows){
@@ -29,6 +30,19 @@ function selectAllData(res){
             res.json({employees});
         } else {
             console.log("error occured in selectAllData");
+            res.status(500);
+        }
+    });
+}
+
+function findQueryData(query, res){
+    dbb.all("SELECT * from employees", function(err, rows){
+        if(!err){
+            console.log("data in findquery :", rows);
+            employees = filterIt(rows, query);
+            res.json({employees});
+        } else {
+            console.log("error occured in findQueryData", err);
             res.status(500);
         }
     });
@@ -105,13 +119,16 @@ function deleteData(id, res){
 }
 
 app.get('/employees', function (req, res, next){
-    selectAllData(res);
-//    res.json({employees});
+//console.log("query", req.query)
+    if(req.query.q){
+        findQueryData(req.query.q, res);
+    } else {
+        selectAllData(res);
+    }
 });
 
 app.get('/employees/:id', function (req, res, next){
     selectData(req.params.id, res);
-//    res.json({employees});
 });
 
 app.post('/employees', function (req, res, next){
@@ -130,15 +147,3 @@ app.delete('/employees/:id', function (req, res, next){
 
 
 app.listen(8081);
-
-function authenticate(req, res, next) {
-  var body = req.body;
-  console.log(body)
-  if (!body.email || !body.password) {
-    res.status(400).end('Must provide email and password');
-  } else if (body.email !== user.email || body.password !== user.password) {
-    res.status(401).end('Email or password incorrect');
-  } else {
-    next();
-  }
-}

@@ -1,3 +1,4 @@
+// mock database during dev
 var faker = require('faker');
 var _ = require('lodash');
 

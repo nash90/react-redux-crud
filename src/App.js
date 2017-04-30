@@ -5,9 +5,7 @@ import { Route, IndexRoute, Router, hashHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { Provider } from 'react-redux';
 import store from './store';
-import { Auth } from './services/Auth';
 import {
-  Login,
   Dashboard,
   EmployeesIndex,
   EmployeesEdit,
@@ -29,14 +27,6 @@ let App = ({children}) => {
             <NavItem>Employees</NavItem>
           </LinkContainer>
         </Nav>
-        {Auth.authenticated() && <Nav className="pull-right">
-          <NavItem onClick={Auth.logout.bind(this)}>Logout</NavItem>
-        </Nav>}
-        {!Auth.authenticated() && <Nav className="pull-right">
-          <LinkContainer to="/login">
-            <NavItem>Login</NavItem>
-          </LinkContainer>
-        </Nav>}
       </Navbar>
       <div className="container">
         {children}
@@ -49,7 +39,6 @@ export default () => {
   return (
     <Provider store={store}>
       <Router history={history}>
-        <Route path="/login" component={Login} />
         <Route path="/" component={App}>
           <IndexRoute component={Dashboard} />
           <Route path="/employees" component={EmployeesIndex} />
