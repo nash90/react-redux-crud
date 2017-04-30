@@ -1,6 +1,6 @@
 import React from 'react';
 import Textarea from 'react-textarea-autosize';
-import { postsActions, postsSelectors } from '../store/posts/index';
+import { postsActions, postsSelectors } from '../store/employees/index';
 import { connect } from 'react-redux';
 import { isEqual } from 'lodash';
 

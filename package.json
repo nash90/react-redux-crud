@@ -14,7 +14,7 @@
     "crud"
   ],
   "author": "Test User",
-  "license": "MIT",
+  "license": "Test",
   "dependencies": {
     "autoprefixer": "^6.5.1",
     "axios": "^0.15.2",

@@ -1,11 +1,11 @@
 export function getParams(state) {
-  return state.posts.params;
+  return state.employees.params;
 }
 
 export function getPost(state, id) {
-  return state.posts.byId[id];
+  return state.employees.byId[id];
 }
 
 export function getPosts(state) {
-  return Object.values(state.posts.byId);
+  return Object.values(state.employees.byId);
 }

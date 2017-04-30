@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router';
 import { EmployeesList } from '../components/employees/EmployeesList';
 import { SearchInput } from '../components/shared/SearchInput';
-import { postsActions, postsSelectors } from '../store/posts/index';
+import { postsActions, postsSelectors } from '../store/employees/index';
 
 @connect(
   (state) => {
